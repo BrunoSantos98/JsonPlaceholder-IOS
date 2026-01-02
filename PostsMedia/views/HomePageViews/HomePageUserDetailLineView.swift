@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct HomePageUserDetailLineView: View {
+    
+    let username: String
+    let userTag: String
+    let image: UIImage
+    @ScaledMetric(relativeTo: .body) var tamanhoAvatar: CGFloat = 48
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack{
+            CircularProfileImageView(height: tamanhoAvatar, width: tamanhoAvatar, image: image)
+            
+            VStack(alignment: .leading){
+                Text(username)
+                    .font(.headline)
+                Text(userTag)
+                    .font(.subheadline)
+            }
+            .padding(.leading ,16)
+        }
     }
 }
 
-#Preview {
-    HomePageUserDetailLineView()
+#Preview(traits: .sizeThatFitsLayout) {
+    HomePageUserDetailLineView(username: "Carlos Albert", userTag: "@Alberto", image: UIImage(named:"avatar-1") ?? UIImage())
 }
