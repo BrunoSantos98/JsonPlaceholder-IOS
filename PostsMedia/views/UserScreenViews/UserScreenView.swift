@@ -9,18 +9,13 @@ import SwiftUI
 
 struct UserScreenView: View {
     
+    @Environment(\.dismiss) var dismiss
     @StateObject var vm = UserScreenViewModel()
+    
+    @State var showTaskList: Bool = false
     
     let userId: Int
     let postQuantity = 10
-    let taskList = [
-        TodoTasks(userId: 1, id: 1, title:"01", completed: false),
-        TodoTasks(userId: 1, id: 2, title:"02", completed: false),
-        TodoTasks(userId: 1, id: 3, title:"03", completed: true),
-        TodoTasks(userId: 1, id: 4, title:"limpar a casa bem rapidinho pelo amor de deus mas ainda assim eu preciso que esse texto seja mais maior", completed: true),
-        TodoTasks(userId: 1, id: 5, title:"task facil", completed: false),
-        TodoTasks(userId: 1, id: 6, title:"Essa não vai aparecer agora", completed: false),
-    ]
     
     var body: some View {
         ZStack{
@@ -134,6 +129,18 @@ private extension UserScreenView {
             .background(.white)
             .cornerRadius(12)
             .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y:2)
+            
+            Button {
+                showTaskList.toggle()
+            } label: {
+                Text("Ver todas as tarefas")
+            }
+            .foregroundStyle(.secondary)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .sheet(isPresented: $showTaskList){
+                taskListSheet
+            }
+            
         }
         .padding(24)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -143,10 +150,45 @@ private extension UserScreenView {
         }
     }
     
+    var taskListSheet: some View{
+        NavigationStack{
+            List(vm.taskList){ todoTask in
+                HStack(spacing: 12){
+                    Image(systemName: todoTask.completed ? "checkmark.circle.fill" : "circle")
+                        .foregroundStyle(todoTask.completed ? .green : .gray)
+                        .font(.title3)
+                    
+                    Text(todoTask.title)
+                        .strikethrough(todoTask.completed, color: .gray)
+                        .foregroundColor(todoTask.completed ? .gray : .primary)
+                }
+                .padding(.vertical, 4)
+            }
+            .navigationTitle("Tarefas de \(vm.user.name)")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar{
+                ToolbarItem(placement: .topBarLeading){
+                    Button {
+                        showTaskList.toggle()
+                    } label: {
+                        
+                        Image(systemName: "xmark")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                        
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    
+                }
+            }
+        }
+    }
+    
     func boxInformations(title: String, value: String) -> some View{
         return ZStack{
             RoundedRectangle(cornerRadius: 14)
                 .fill(Color(.secondarySystemBackground))
+            //MARK: Mudar esse width e testar depois
                 .frame(width:126, height: 88)
             VStack{
                 Text(title)
