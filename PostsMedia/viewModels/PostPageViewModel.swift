@@ -29,6 +29,6 @@ class PostPageViewModel: ObservableObject {
     }
     
     func getTextToShare(post: PostHomePageModel) -> String {
-        return "💬 See the last post from \(post.username)\n\n\(post.post.title)\n\(post.post.body)"
+        return "💬 See the last post from \(post.username)\n\n\(post.post.title)\n\n\(post.post.body)"
     }
 }
