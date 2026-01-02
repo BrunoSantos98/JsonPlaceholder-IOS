@@ -29,17 +29,12 @@ struct UserScreenView: View {
                 VStack(spacing: 24){
                     profileInformations
                     
-                    HStack(spacing: 16){
+                    HStack(spacing: -24){
                         boxInformations(title: "ID", value: "\(vm.user.id)")
                         boxInformations(title: "Posts", value: "\(postQuantity)")
                     }
                     
-                    Link(destination: getUrlString(link: vm.user.website)){
-                        HStack{
-                            Image(systemName: "globe")
-                            Text(vm.user.website)
-                        }
-                    }
+                    getUrlString(link: vm.user.website)
                     
                     userLastTasks
                 }
@@ -173,12 +168,13 @@ private extension UserScreenView {
             }
         }
     }
-    //mudança
+    
     func boxInformations(title: String, value: String) -> some View{
         return ZStack{
             RoundedRectangle(cornerRadius: 14)
                 .fill(Color(.secondarySystemBackground))
-                .frame(width:126, height: 88)
+                .frame(height: 88)
+                .frame(maxWidth: .infinity)
             VStack{
                 Text(title)
                     .font(.title)
@@ -188,15 +184,21 @@ private extension UserScreenView {
                     .fontWeight(.regular)
             }
         }
+        .padding(.horizontal, 28)
     }
     
-    //mudar essa logica para safe unwrapping
-    func getUrlString(link: String) -> URL{
-        guard let url = URL(string: link) else {
-            return URL(string: "www.google.com")!
+    @ViewBuilder
+    func getUrlString(link: String) -> some View{
+        if let url = URL(string: link) {
+            Link(destination: url){
+                HStack{
+                    Image(systemName: "globe")
+                    Text(vm.user.website)
+                }
+            }
+        } else{
+            EmptyView()
         }
-        
-        return url
     }
 }
 
