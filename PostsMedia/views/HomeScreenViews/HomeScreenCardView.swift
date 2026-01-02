@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomePageCardView: View {
+struct HomeScreenCardView: View {
     let cardPost: PostHomePageModel
     let image: UIImage
     
@@ -23,7 +23,7 @@ struct HomePageCardView: View {
                 .aspectRatio(1.5, contentMode: .fit)
             
             VStack(alignment: .leading, spacing: 18){
-                HomePageUserDetailLineView(username: cardPost.username, userTag: cardPost.userTag, image: image)
+                UserResumedLineView(username: cardPost.username, userTag: cardPost.userTag, image: image)
                 
                 Text(cardPost.post.title)
                     .font(.headline)
@@ -40,5 +40,5 @@ struct HomePageCardView: View {
 
 
 #Preview(traits: .sizeThatFitsLayout) {
-    HomePageCardView(cardPost: PostHomePageModel(id: 1, username: "Carlos Albert", userTag: "@Alberto",imageName: "avatar-1" ,post: PostModel(userId: 1, id: 1, title: "Aqui um título pequeno multilinha", body: "Um texto multiline aqui só para fazer uma demonstração basicoma mesmo sem muita enrolação")), image:UIImage(named: "avatar-1") ?? UIImage())
+    HomeScreenCardView(cardPost: PostHomePageModel(id: 1, username: "Carlos Albert", userTag: "@Alberto",imageName: "avatar-1" ,post: PostModel(userId: 1, id: 1, title: "Aqui um título pequeno multilinha", body: "Um texto multiline aqui só para fazer uma demonstração basicoma mesmo sem muita enrolação")), image:UIImage(named: "avatar-1") ?? UIImage())
 }

@@ -12,6 +12,8 @@ class PostsDataService: ObservableObject {
     
     static let instance = PostsDataService()
     
+    private let fileManagerService = LocalFileManagerServices.instance
+    
     @Published var posts: [PostModel] = []
     @Published var postById: PostModel? = nil
     @Published var postComments: [PostCommentModel] = []
@@ -84,6 +86,28 @@ class PostsDataService: ObservableObject {
         }
     }
     
+    func getUserById(userId: Int){
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/users/\(userId)") else { return }
+        
+        URLSession.shared.dataTaskPublisher(for: url)
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            .receive(on: DispatchQueue.main)
+            .tryMap(handleOutput)
+            .decode(type: UserModel.self, decoder: JSONDecoder())
+            .sink { (completion) in
+                switch completion {
+                case .failure(let error):
+                    print("Erro ao tentar buscar os dados: \(error)")
+                    break
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] (receivedUser) in
+                self?.userById = receivedUser
+            }
+            .store(in: &cancellables)
+    }
+
     func handleOutput(output: URLSession.DataTaskPublisher.Output) throws -> Data{
         guard
             let response = output.response as? HTTPURLResponse,
@@ -125,26 +149,45 @@ class PostsDataService: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
-    func getUserById(id: Int){
-        guard let url = URL(string: "https://jsonplaceholder.typicode.com/users/\(id)") else { return }
         
-        URLSession.shared.dataTaskPublisher(for: url)
-            .subscribe(on: DispatchQueue.global(qos: .background))
-            .receive(on: DispatchQueue.main)
-            .tryMap(handleOutput)
-            .decode(type: UserModel.self, decoder: JSONDecoder())
-            .sink { (completion) in
-                switch completion {
-                case .failure(let error):
-                    print("Erro ao tentar buscar os dados: \(error)")
-                    break
-                case .finished:
-                    break
-                }
-            } receiveValue: { [weak self] (receivedUser) in
-                self?.userById = receivedUser
+    func getUserById(userId: Int) async throws -> UserModel {
+        guard
+            let url = URL(string: "https://jsonplaceholder.typicode.com/users?id=\(userId)") else {
+            throw URLError(.badURL)
+        }
+        
+        do{
+            let(data, response) = try await URLSession.shared.data(from: url)
+            try handleResponse(response: response, data: data)
+            
+            let listUsers =  try JSONDecoder().decode([UserModel].self, from: data)
+            guard let user = listUsers.first else {
+                throw URLError(.cannotParseResponse)
             }
-            .store(in: &cancellables)
+            
+            return user
+        }catch let error{
+            print("Error when try to get user by id: \(error)")
+            return UserModel()
+        }
+    }
+    
+    
+    func getTasksByUserId(userId: Int) async throws -> [TodoTasks]{
+        guard
+            let url = URL(string: "https://jsonplaceholder.typicode.com/todos?userId=\(userId)") else {
+            throw URLError(.badURL)
+        }
+        
+        do{
+            let(data, response) = try await URLSession.shared.data(from: url)
+            try handleResponse(response: response, data: data)
+            
+            return try JSONDecoder().decode([TodoTasks].self, from: data)
+            
+        }catch let error{
+            print("Error when try to get user by id: \(error)")
+            return []
+        }
     }
 }

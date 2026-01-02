@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PostPageViewModel: ObservableObject {
+class PostScreenViewModel: ObservableObject {
     private let postsService = PostsDataService.instance
     
     @Published var postComments: [PostCommentModel] = []

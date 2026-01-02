@@ -7,26 +7,24 @@
 
 import SwiftUI
 
-struct HomePageView: View {
+struct HomeScreenView: View {
     
-    @StateObject private var vm = HomePageViewModel()
+    @StateObject private var vm = HomeScreenViewModel()
     
     var body: some View {
-        NavigationStack{
             ScrollView{
-                VStack{
+                LazyVStack{
                     ForEach(vm.postsHomePage){post in
                         NavigationLink(value: post){
-                            HomePageCardView(cardPost: post, image: vm.loadImage(imageName: post.imageName))
+                            HomeScreenCardView(cardPost: post, image: vm.loadImage(imageName: post.imageName))
                         }
-                    }
-                    .navigationDestination(for: PostHomePageModel.self){post in
-                        PostPageView(post: post)
                     }
                 }
                 .buttonStyle(PlainButtonStyle())
+                .navigationDestination(for: PostHomePageModel.self){post in
+                    PostScreenView(post: post)
+                }
             }
-        }
         .onAppear{
             vm.loadData()
         }
@@ -34,5 +32,7 @@ struct HomePageView: View {
 }
 
 #Preview {
-    HomePageView()
+    NavigationStack{
+        HomeScreenView()
+    }
 }

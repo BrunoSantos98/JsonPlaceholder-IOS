@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomePageUserDetailLineView: View {
+struct UserResumedLineView: View {
     
     let username: String
     let userTag: String
@@ -30,5 +30,5 @@ struct HomePageUserDetailLineView: View {
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-    HomePageUserDetailLineView(username: "Carlos Albert", userTag: "@Alberto", image: UIImage(named:"avatar-1") ?? UIImage())
+    UserResumedLineView(username: "Carlos Albert", userTag: "@Alberto", image: UIImage(named:"avatar-1") ?? UIImage())
 }

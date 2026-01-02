@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class HomePageViewModel: ObservableObject {
+class HomeScreenViewModel: ObservableObject {
     private let postsService = PostsDataService.instance
     private let fileManagerService = LocalFileManagerServices.instance
     

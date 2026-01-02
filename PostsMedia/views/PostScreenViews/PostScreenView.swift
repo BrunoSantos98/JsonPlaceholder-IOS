@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct PostPageView: View {
+struct PostScreenView: View {
     
     let fileManager = LocalFileManagerServices.instance
-    @StateObject private var vm = PostPageViewModel()
+    @StateObject private var vm = PostScreenViewModel()
     
     let post: PostHomePageModel
     
@@ -37,12 +37,16 @@ struct PostPageView: View {
     }
 }
 
-private extension PostPageView{
+private extension PostScreenView{
     
     var headSection: some View {
         VStack(alignment: .leading){
             HStack{
-                HomePageUserDetailLineView(username: post.username, userTag: post.userTag, image: fileManager.loadImage(imageName: post.imageName))
+                NavigationLink(value: post.post.userId)
+                {
+                    UserResumedLineView(username: post.username, userTag: post.userTag, image: fileManager.loadImage(imageName: post.imageName))
+                }
+                .buttonStyle(PlainButtonStyle())
                 
                 Spacer()
                 
@@ -50,6 +54,9 @@ private extension PostPageView{
                     Image(systemName: "square.and.arrow.up")
                         .font(.headline)
                 }
+            }
+            .navigationDestination(for: Int.self){ userId in
+                UserScreenView(userId: userId)
             }
             .padding(.bottom, 24)
             
@@ -124,7 +131,7 @@ private extension PostPageView{
 
 #Preview {
     NavigationStack {
-        PostPageView(
+        PostScreenView(
             post: PostHomePageModel(id: 1, username: "Carlos Albert", userTag: "@Alberto",imageName: "avatar-1" ,post: PostModel(userId: 1, id: 1, title: "Aqui um título pequeno multilinha", body: "Um texto multiline aqui só para fazer uma demonstração basicoma mesmo sem muita enrolação"))
         )
     }
