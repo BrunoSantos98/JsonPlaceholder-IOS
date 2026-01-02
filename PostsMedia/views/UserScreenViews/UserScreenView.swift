@@ -43,7 +43,7 @@ struct UserScreenView: View {
                     
                     userLastTasks
                 }
-                .background(.white)
+                .background(Color("primaryBackground"))
                 
                 
             }
@@ -65,21 +65,15 @@ private extension UserScreenView {
                 CircularProfileImageView(height: 100, width: 100, image: vm.loadImage(imageName: "avatar-\(userId)"))
                     .overlay(
                         Circle()
-                            .stroke(style: StrokeStyle(lineWidth: 4))
-                            .fill(.white)
-                            .shadow(radius: 5)
+                            .stroke(style: StrokeStyle(lineWidth: 2))
+                            .fill(Color("primaryBackground"))
+                            .shadow(color: Color("primaryBackgroundContrast"), radius: 3, x: 0.5, y: 0.5)
                     )
                 
                 Circle()
                     .fill(.green)
-                    .frame(width: 28, height: 28)
+                    .frame(width: 24, height: 24)
                     .frame(alignment: .bottomTrailing)
-                    .overlay(
-                        Circle()
-                            .stroke(style: StrokeStyle(lineWidth: 2))
-                            .fill(.white)
-                            .shadow(radius: 5, x: 2, y: 2)
-                    )
             }
             .frame(maxWidth: .infinity)
             
@@ -179,12 +173,11 @@ private extension UserScreenView {
             }
         }
     }
-    
+    //mudança
     func boxInformations(title: String, value: String) -> some View{
         return ZStack{
             RoundedRectangle(cornerRadius: 14)
                 .fill(Color(.secondarySystemBackground))
-            //MARK: Mudar esse width e testar depois
                 .frame(width:126, height: 88)
             VStack{
                 Text(title)
