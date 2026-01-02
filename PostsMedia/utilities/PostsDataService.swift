@@ -6,3 +6,145 @@
 //
 
 import Foundation
+import Combine
+
+class PostsDataService: ObservableObject {
+    
+    static let instance = PostsDataService()
+    
+    @Published var posts: [PostModel] = []
+    @Published var postById: PostModel? = nil
+    @Published var postComments: [PostCommentModel] = []
+    @Published var users: [UserModel] = []
+    @Published var userById: UserModel? = nil
+    var cancellables = Set<AnyCancellable>()
+    
+    init(){}
+    
+    func getPosts(){
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return }
+        
+        URLSession.shared.dataTaskPublisher(for: url)
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            .receive(on: DispatchQueue.main)
+            .tryMap(handleOutput)
+            .decode(type: [PostModel].self, decoder: JSONDecoder())
+            .sink { (completion) in
+                switch completion {
+                case .failure(let error):
+                    print("Erro ao tentar buscar os dados: \(error)")
+                    break
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] (receivedsPosts) in
+                self?.posts = receivedsPosts
+            }
+            .store(in: &cancellables)
+    }
+    
+    func getPostById(id: Int){
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts/\(id)") else { return }
+        
+        URLSession.shared.dataTaskPublisher(for: url)
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            .receive(on: DispatchQueue.main)
+            .tryMap(handleOutput)
+            .decode(type: PostModel.self, decoder: JSONDecoder())
+            .sink { (completion) in
+                switch completion {
+                case .failure(let error):
+                    print("Erro ao tentar buscar os dados: \(error)")
+                    break
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] (receivedPost) in
+                self?.postById = receivedPost
+            }
+            .store(in: &cancellables)
+    }
+    
+    func getPostComments(postId: Int) async throws -> [PostCommentModel] {
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/comments?postId=\(postId)") else {
+            throw URLError(.badURL)
+        }
+        
+        do
+        {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            
+            try handleResponse(response: response, data: data)
+            
+            return try JSONDecoder().decode([PostCommentModel].self, from: data)
+            
+        } catch let error{
+            print("Error when try to gbet comments: \(error)")
+            return []
+        }
+    }
+    
+    func handleOutput(output: URLSession.DataTaskPublisher.Output) throws -> Data{
+        guard
+            let response = output.response as? HTTPURLResponse,
+            response.statusCode >= 200 && response.statusCode < 300 else {
+            throw URLError(.badServerResponse)
+        }
+        
+        return output.data
+    }
+
+    func handleResponse(response: URLResponse, data: Data) throws{
+        guard
+            let response = response as? HTTPURLResponse,
+            response.statusCode >= 200 && response.statusCode < 300 else {
+            throw URLError(.badServerResponse)
+        }
+        
+//        return data
+    }
+    
+    func getUsers(){
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else { return }
+        
+        URLSession.shared.dataTaskPublisher(for: url)
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            .receive(on: DispatchQueue.main)
+            .tryMap(handleOutput)
+            .decode(type: [UserModel].self, decoder: JSONDecoder())
+            .sink { (completion) in
+                switch completion {
+                case .failure(let error):
+                    print("Erro ao tentar buscar os dados: \(error)")
+                    break
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] (receivedsUsers) in
+                self?.users = receivedsUsers
+            }
+            .store(in: &cancellables)
+    }
+    
+    func getUserById(id: Int){
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/users/\(id)") else { return }
+        
+        URLSession.shared.dataTaskPublisher(for: url)
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            .receive(on: DispatchQueue.main)
+            .tryMap(handleOutput)
+            .decode(type: UserModel.self, decoder: JSONDecoder())
+            .sink { (completion) in
+                switch completion {
+                case .failure(let error):
+                    print("Erro ao tentar buscar os dados: \(error)")
+                    break
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] (receivedUser) in
+                self?.userById = receivedUser
+            }
+            .store(in: &cancellables)
+    }
+}
