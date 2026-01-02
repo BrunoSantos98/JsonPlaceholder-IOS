@@ -7,12 +7,23 @@
 
 import SwiftUI
 
+
+
 struct CircularProfileImageView: View {
+    
+    let height: CGFloat
+    let width: CGFloat
+    let image: UIImage
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Image(uiImage: image)
+            .resizable()
+            .scaledToFill()
+            .frame(width: width, height: height)
+            .clipShape(Circle())
     }
 }
 
 #Preview {
-    CircularProfileImageView()
+    CircularProfileImageView(height: 48, width: 48, image: UIImage(named:"avatar-1") ?? UIImage())
 }
