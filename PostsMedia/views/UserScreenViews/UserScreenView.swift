@@ -41,7 +41,7 @@ struct UserScreenView: View {
                         }
                     }
                     
-                    todoTaskList
+                    userLastTasks
                 }
                 .background(.white)
                 
@@ -92,7 +92,7 @@ private extension UserScreenView {
         }
     }
     
-    var todoTaskList: some View{
+    var userLastTasks: some View{
         VStack(alignment: .leading, spacing: 16){
             HStack{
                 Image(systemName: "checkmark.rectangle.fill")
@@ -102,33 +102,7 @@ private extension UserScreenView {
             .padding(.bottom, 16)
             .font(Font.title2)
             
-            VStack(alignment: .leading, spacing: 8){
-                ForEach(vm.taskList.suffix(5), id: \.self){ todoTask in
-                    VStack(spacing: 0){
-                        HStack(spacing: 12){
-                            Image(systemName: todoTask.completed ? "checkmark.circle.fill" : "circle")
-                                .foregroundStyle(todoTask.completed ? .green : .gray)
-                                .font(.title3)
-                            
-                            Text(todoTask.title)
-                                .strikethrough(todoTask.completed, color: .gray)
-                                .foregroundStyle(todoTask.completed ? .gray : .primary)
-                        }
-                        .padding(.vertical, 8)
-                    }
-                    
-                    if(todoTask.id != vm.taskList.suffix(5).last?.id){
-                        Divider()
-                            .padding(.leading, 4)
-                    }
-                }
-            }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 8)
-            .lineLimit(2)
-            .background(.white)
-            .cornerRadius(12)
-            .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y:2)
+            todoTaskList
             
             Button {
                 showTaskList.toggle()
@@ -147,6 +121,28 @@ private extension UserScreenView {
         .background(Color(.secondarySystemBackground))
         .onAppear{
             vm.fetchTodoTasks(userId: userId)
+        }
+    }
+    
+    var todoTaskList: some View{
+        StandardListView(itens: vm.taskList.suffix(5)){ todoTask in
+            VStack(alignment: .leading, spacing: 8){
+                HStack(spacing: 12){
+                    Image(systemName: todoTask.completed ? "checkmark.circle.fill" : "circle")
+                        .foregroundStyle(todoTask.completed ? .green : .gray)
+                        .font(.title3)
+                    
+                    Text(todoTask.title)
+                        .strikethrough(todoTask.completed, color: .gray)
+                        .foregroundStyle(todoTask.completed ? .gray : .primary)
+                    
+                    Spacer()
+                }
+                .padding(.vertical, 8)
+            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 8)
+            .lineLimit(2)
         }
     }
     

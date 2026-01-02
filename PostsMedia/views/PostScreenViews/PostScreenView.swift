@@ -96,36 +96,24 @@ private extension PostScreenView{
     }
     
     var listOfComments: some View{
-        VStack(alignment: .leading, spacing: 24){
-            ForEach(vm.postComments, id: \.self){ comment in
-                VStack(alignment: .leading){
-                    HStack(alignment: .top){
-                        Image(systemName: "person.circle.fill")
-                            .font(.title)
-                            
-                        VStack(alignment: .leading, spacing: 12){
-                            Text(comment.email)
-                                .font(.headline)
-                            Text(comment.body)
-                                .font(.subheadline)
-                        }
-                    }
-                    .padding(.bottom, 8)
+        StandardListView(itens: vm.postComments){ comment in
+            VStack(alignment: .leading, spacing: 24){
+                HStack(alignment: .top){
+                    Image(systemName: "person.circle.fill")
+                        .font(.title)
                     
-                    if comment != vm.postComments.last{
-                        Divider()
+                    VStack(alignment: .leading, spacing: 12){
+                        Text(comment.email)
+                            .font(.headline)
+                        Text(comment.body)
+                            .font(.subheadline)
                     }
                 }
+                .padding(.bottom, 8)
             }
+            .padding(.vertical, 12)
+            .background(Color("primaryBackground"))
         }
-        .padding(.vertical, 24)
-        .padding(.horizontal, 24)
-        .background(Color("primaryBackground"))
-        .cornerRadius(12)
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color(.secondarySystemBackground), lineWidth: 1)
-        )
     }
 }
 
