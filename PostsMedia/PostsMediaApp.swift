@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct PostsMediaApp: App {
@@ -13,5 +14,6 @@ struct PostsMediaApp: App {
         WindowGroup {
             MainAppView()
         }
+        .modelContainer(for: SaveDataModel.self)
     }
 }

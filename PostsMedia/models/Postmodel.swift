@@ -30,4 +30,20 @@ struct PostHomePageModel: Identifiable, Codable, Hashable{
     let userTag: String
     let imageName: String
     let post: PostModel
+    
+    init(id: Int, username: String, userTag: String, imageName: String, post: PostModel){
+        self.id = id
+        self.username = username
+        self.userTag = userTag
+        self.imageName = imageName
+        self.post = post
+    }
+    
+    init(from savedPost: SaveDataModel){
+        self.id = savedPost.id
+        self.username = savedPost.username
+        self.userTag = savedPost.userTag
+        self.imageName = savedPost.imageName
+        self.post = savedPost.post
+    }
 }
