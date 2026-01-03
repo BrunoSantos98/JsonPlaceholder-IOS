@@ -22,7 +22,7 @@ struct MainAppView: View {
             .tag(0)
             
             NavigationStack{
-                Text("Saved posts")
+                SavedPostsView()
             }
             .tabItem {
                 Label("Saved", systemImage: "bookmark.fill")

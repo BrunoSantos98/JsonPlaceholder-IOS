@@ -55,9 +55,10 @@ class HomeScreenViewModel: ObservableObject {
                               "avatar-6", "avatar-7", "avatar-8", "avatar-9", "avatar-10",]
         
         imageNames.forEach { imageName in
-            if let imagem = UIImage(named: imageName){
-                let response = fileManagerService.saveImage(image: imagem, name: imageName)
-                print("Image \(imageName) response: \(response)")
+            if let imagem = UIImage(named: imageName),
+               fileManagerService.getImage(imageName: imageName) == nil {
+                        let response = fileManagerService.saveImage(image: imagem, name: imageName)
+                        print("Image \(imageName) response: \(response)")
             }
         }
     }

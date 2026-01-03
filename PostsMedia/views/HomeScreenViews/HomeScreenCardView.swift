@@ -8,12 +8,28 @@
 import SwiftUI
 
 struct HomeScreenCardView: View {
+    @Environment(\.modelContext) private var context
+    @StateObject private var postVM = PostScreenViewModel()
+    
     let cardPost: PostHomePageModel
     let image: UIImage
     
     var body: some View {
-            VStack(alignment: .leading, spacing: 12){
+        VStack(alignment: .leading, spacing: 12){
+            HStack{
                 UserResumedLineView(username: cardPost.username, userTag: cardPost.userTag, image: image)
+                
+                Spacer()
+                
+                Button {
+                    withAnimation(.bouncy(duration: 0.5, extraBounce: 0.4)){
+                        postVM.toggleSaveStatus(post: cardPost)
+                    }
+                    } label: {
+                            Image(systemName: postVM.isSaved ? "bookmark.fill" : "bookmark")
+                                .font(.title)
+                    }
+                }
                 
                 Text(cardPost.post.title)
                     .font(.headline)
@@ -38,10 +54,13 @@ struct HomeScreenCardView: View {
                     .strokeBorder(Color("primaryBackgroundContrast").opacity(0.1), lineWidth: 1)
                     .shadow(color: Color("primaryBackgroundContrast").opacity(0.3), radius: 8)
             )
+            .onAppear{
+                postVM.setupDatabase(context: context, postId: cardPost.post.id)
+            }
+        }
     }
-}
-
-
-#Preview(traits: .sizeThatFitsLayout) {
-    HomeScreenCardView(cardPost: PostHomePageModel(id: 1, username: "Carlos Albert", userTag: "@Alberto",imageName: "avatar-1" ,post: PostModel(userId: 1, id: 1, title: "Aqui um título pequeno multilinha", body: "Um texto multiline aqui só para fazer uma demonstração basicoma mesmo sem muita enrolação")), image:UIImage(named: "avatar-1") ?? UIImage())
-}
+    
+    
+    #Preview(traits: .sizeThatFitsLayout) {
+        HomeScreenCardView(cardPost: PostHomePageModel(id: 1, username: "Carlos Albert", userTag: "@Alberto",imageName: "avatar-1" ,post: PostModel(userId: 1, id: 1, title: "Aqui um título pequeno multilinha", body: "Um texto multiline aqui só para fazer uma demonstração basicoma mesmo sem muita enrolação")), image:UIImage(named: "avatar-1") ?? UIImage())
+    }
