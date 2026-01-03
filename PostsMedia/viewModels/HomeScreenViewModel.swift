@@ -14,6 +14,7 @@ class HomeScreenViewModel: ObservableObject {
     private let fileManagerService = LocalFileManagerServices.instance
     
     @Published var postsHomePage: [PostHomePageModel] = []
+    @Published var isLoading: Bool = false
     private var cancellables = Set<AnyCancellable>()
     
     init(){
@@ -44,6 +45,7 @@ class HomeScreenViewModel: ObservableObject {
             }
             .sink{ [weak self] (returnedPosts) in
                 self?.postsHomePage = returnedPosts
+                self?.isLoading = false            
             }
             .store(in: &cancellables)
     }
@@ -61,6 +63,7 @@ class HomeScreenViewModel: ObservableObject {
     }
     
     func loadData(){
+        isLoading = true
         postsService.getPosts()
         postsService.getUsers()
     }
