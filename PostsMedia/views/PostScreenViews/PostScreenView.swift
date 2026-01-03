@@ -10,6 +10,7 @@ import SwiftUI
 struct PostScreenView: View {
     
     let fileManager = LocalFileManagerServices.instance
+    @Environment(\.modelContext) private var context
     @StateObject private var vm = PostScreenViewModel()
     
     let post: PostHomePageModel
@@ -39,6 +40,7 @@ struct PostScreenView: View {
             .navigationBarTitleDisplayMode(.inline)
             .scrollBounceBehavior(.basedOnSize)
             .onAppear {
+                vm.setupDatabase(context: context, postId: post.post.id)
                 vm.getComments(forPostId: post.post.id)
             }
         }
@@ -58,9 +60,18 @@ private extension PostScreenView{
                 
                 Spacer()
                 
+                Button {
+                    vm.toggleSaveStatus(post: post)
+                } label: {
+                    Image(systemName: vm.isSaved ? "bookmark.fill" : "bookmark")
+                        .font(.title)
+                        .contentTransition(.symbolEffect(.replace))
+                }
+                .padding(.trailing, 18)
+                
                 ShareLink(item: vm.getTextToShare(post: post)){
                     Image(systemName: "square.and.arrow.up")
-                        .font(.headline)
+                        .font(.title)
                 }
             }
             .navigationDestination(for: Int.self){ userId in
