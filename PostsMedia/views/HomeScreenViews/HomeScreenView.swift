@@ -30,7 +30,7 @@ struct HomeScreenView: View {
     }
 }
 
-// MARK: - Subviews para organizar o código
+// MARK: - Subviews
 private extension HomeScreenView {
     
     var contentListView: some View {
@@ -56,16 +56,16 @@ private extension HomeScreenView {
     var emptyStateView: some View {
         VStack {
             Image(systemName: "tray")
-                .font(.system(size: 50))
-                .foregroundColor(.gray)
+                .font(.largeTitle)
+                .foregroundColor(.secondary)
                 .padding(.bottom, 8)
             
-            Text("Sem posts no momento.")
+            Text("Nothing to see here yet")
                 .font(.title3)
                 .fontWeight(.semibold)
                 .foregroundColor(.secondary)
             
-            Button("Tentar novamente") {
+            Button("Try again") {
                 vm.loadData()
             }
             .padding(.top)
@@ -74,7 +74,7 @@ private extension HomeScreenView {
     }
 }
 
-// MARK: - Componente Visual do Esqueleto
+// MARK: - Skeleton component
 struct SkeletonRowView: View {
     @State private var isAnimating = false
     
@@ -96,7 +96,7 @@ struct SkeletonRowView: View {
         }
         .padding(.vertical, 12)
         .padding(.horizontal, 16)
-        .foregroundStyle(Color.gray.opacity(0.3))
+        .foregroundStyle(Color(.secondarySystemBackground).opacity(0.3))
         .opacity(isAnimating ? 0.3 : 1.0)
         .onAppear {
             withAnimation(
