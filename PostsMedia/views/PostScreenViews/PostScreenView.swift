@@ -15,6 +15,9 @@ struct PostScreenView: View {
     let post: PostHomePageModel
     
     var body: some View {
+        
+        
+        
         ZStack{
             VStack(spacing: 0){
                 Color("primaryBackground")
@@ -25,7 +28,12 @@ struct PostScreenView: View {
             ScrollView
             {
                 headSection
-                commentsSection
+                
+                if vm.isLoading{
+                    loadingComments
+                } else {
+                    commentsSection
+                }
             }
             .navigationTitle(Text("Post"))
             .navigationBarTitleDisplayMode(.inline)
@@ -114,6 +122,26 @@ private extension PostScreenView{
             .padding(.vertical, 12)
             .background(Color("primaryBackground"))
         }
+    }
+    
+    var loadingComments: some View{
+        VStack(alignment: .leading){
+            HStack{
+                Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90.icloud.fill")
+                    .font(.title)
+                    .padding(.trailing, 8)
+                Text("Getting comments")
+                    .font(.title)
+                    .fontWeight(.semibold)
+            }
+            
+            LoadingStateView(elements: 3)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.top,24)
+        .padding(.horizontal,24)
+        .padding(.bottom, 24)
+        .background(Color(.secondarySystemBackground))
     }
 }
 

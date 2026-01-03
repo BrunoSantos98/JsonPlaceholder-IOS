@@ -14,7 +14,7 @@ struct HomeScreenView: View {
     var body: some View {
         ScrollView {
             if vm.isLoading {
-                loadingStateView
+                LoadingStateView(elements: 8)
             } else if vm.postsHomePage.isEmpty {
                 emptyStateView
             } else {
@@ -44,15 +44,6 @@ private extension HomeScreenView {
         .buttonStyle(PlainButtonStyle())
     }
     
-    var loadingStateView: some View {
-        VStack(spacing: 0) {
-            ForEach(0..<8, id: \.self) { _ in
-                SkeletonRowView()
-                Divider().padding(.leading, 16)
-            }
-        }
-    }
-    
     var emptyStateView: some View {
         VStack {
             Image(systemName: "tray")
@@ -71,41 +62,6 @@ private extension HomeScreenView {
             .padding(.top)
         }
         .frame(maxWidth: .infinity, minHeight: 400)
-    }
-}
-
-// MARK: - Skeleton component
-struct SkeletonRowView: View {
-    @State private var isAnimating = false
-    
-    var body: some View {
-        HStack(spacing: 12) {
-            Circle()
-                .frame(width: 40, height: 40)
-            
-            VStack(alignment: .leading, spacing: 8) {
-
-                RoundedRectangle(cornerRadius: 4)
-                    .frame(height: 14)
-                    .frame(maxWidth: .infinity)
-                
-                RoundedRectangle(cornerRadius: 4)
-                    .frame(height: 14)
-                    .frame(width: 150)
-            }
-        }
-        .padding(.vertical, 12)
-        .padding(.horizontal, 16)
-        .foregroundStyle(Color(.secondarySystemBackground).opacity(0.3))
-        .opacity(isAnimating ? 0.3 : 1.0)
-        .onAppear {
-            withAnimation(
-                .easeInOut(duration: 0.8)
-                .repeatForever(autoreverses: true)
-            ) {
-                isAnimating = true
-            }
-        }
     }
 }
 

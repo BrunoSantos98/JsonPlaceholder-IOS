@@ -30,13 +30,14 @@ struct UserScreenView: View {
                     profileInformations
                     
                     HStack(spacing: -24){
-                        boxInformations(title: "ID", value: "\(vm.user.id)")
+                        boxInformations(title: "ID", value: "\(userId)")
                         boxInformations(title: "Posts", value: "\(postQuantity)")
                     }
                     
                     getUrlString(link: vm.user.website)
                     
                     userLastTasks
+                    
                 }
                 .background(Color("primaryBackground"))
                 
@@ -83,6 +84,7 @@ private extension UserScreenView {
     
     var userLastTasks: some View{
         VStack(alignment: .leading, spacing: 16){
+            
             HStack{
                 Image(systemName: "checkmark.rectangle.fill")
                     .foregroundStyle(.green)
@@ -91,17 +93,22 @@ private extension UserScreenView {
             .padding(.bottom, 16)
             .font(Font.title2)
             
-            todoTaskList
-            
-            Button {
-                showTaskList.toggle()
-            } label: {
-                Text("Ver todas as tarefas")
-            }
-            .foregroundStyle(.secondary)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .sheet(isPresented: $showTaskList){
-                taskListSheet
+            if vm.isLoading {
+                LoadingStateView(elements: 5, completeLoad: false)
+            } else{
+                
+                todoTaskList
+                
+                Button {
+                    showTaskList.toggle()
+                } label: {
+                    Text("Ver todas as tarefas")
+                }
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .sheet(isPresented: $showTaskList){
+                    taskListSheet
+                }
             }
             
         }

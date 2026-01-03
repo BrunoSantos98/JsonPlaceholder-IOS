@@ -17,16 +17,19 @@ class UserScreenViewModel: ObservableObject{
     @Published var user: UserModel = UserModel()
     @Published var taskList: [TodoTasks] = []
     @Published var errorMessage: String?
+    @Published var isLoading: Bool = false
     
     func fetchUser(userId: Int) {
         
         self.errorMessage = nil
+        self.isLoading = true
         
         Task{
             do{
                 let fetchedUser = try await postsService.getUserById(userId: userId)
                 
                 self.user = fetchedUser
+                self.isLoading = false
             } catch let error{
                 self.errorMessage = "Ocorreu um erro: \(error.localizedDescription)"
                 if let errorMsg = self.errorMessage {
@@ -39,12 +42,14 @@ class UserScreenViewModel: ObservableObject{
     
     func fetchTodoTasks(userId: Int){
         self.errorMessage = nil
+        self.isLoading = true
         
         Task{
             do{
                 let fetchedTasks = try await postsService.getTasksByUserId(userId: userId)
                 
                 self.taskList = fetchedTasks
+                self.isLoading = false
             }catch let error{
                 self.errorMessage = "Ocorreu um erro: \(error.localizedDescription)"
                 if let errorMsg = self.errorMessage {

@@ -11,15 +11,18 @@ class PostScreenViewModel: ObservableObject {
     private let postsService = PostsDataService.instance
     
     @Published var postComments: [PostCommentModel] = []
+    @Published var isLoading: Bool = false
     
     init(){}
     
     func getComments(forPostId postId: Int) {
+        isLoading = true
         Task{
             do{
                 let receivedComments = try await postsService.getPostComments(postId: postId)
                 
                 await MainActor.run {
+                    isLoading = false
                     self.postComments = receivedComments
                 }
             } catch let error{
