@@ -21,7 +21,7 @@ class PostsDataService: ObservableObject {
     @Published var userById: UserModel? = nil
     var cancellables = Set<AnyCancellable>()
     
-    init(){}
+    private init(){}
     
     func getPosts(){
         guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return }
@@ -171,8 +171,7 @@ class PostsDataService: ObservableObject {
             return UserModel()
         }
     }
-    
-    
+        
     func getTasksByUserId(userId: Int) async throws -> [TodoTasks]{
         guard
             let url = URL(string: "https://jsonplaceholder.typicode.com/todos?userId=\(userId)") else {
@@ -190,4 +189,5 @@ class PostsDataService: ObservableObject {
             return []
         }
     }
+    
 }

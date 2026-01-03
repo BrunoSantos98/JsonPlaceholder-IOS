@@ -12,29 +12,32 @@ struct HomeScreenCardView: View {
     let image: UIImage
     
     var body: some View {
-        ZStack(alignment: .leading){
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color("primaryBackground"))
-                .strokeBorder(Color("primaryBackgroundContrast").opacity(0.1), lineWidth: 1)
-                .shadow(color: Color("primaryBackgroundContrast").opacity(0.3), radius: 8)
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal ,32)
-                .padding(.vertical ,16)
-                .aspectRatio(1.5, contentMode: .fit)
-            
-            VStack(alignment: .leading, spacing: 18){
+            VStack(alignment: .leading, spacing: 12){
                 UserResumedLineView(username: cardPost.username, userTag: cardPost.userTag, image: image)
                 
                 Text(cardPost.post.title)
                     .font(.headline)
                     .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
+                
                 Text(cardPost.post.body)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                    .lineLimit(2)
+                    .lineLimit(3)
+                    .multilineTextAlignment(.leading)
+                
+                Spacer(minLength: 0)
             }
-            .padding(.horizontal ,56)
-        }
+            .padding(20)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(height: 200)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color("primaryBackground"))
+                    .strokeBorder(Color("primaryBackgroundContrast").opacity(0.1), lineWidth: 1)
+                    .shadow(color: Color("primaryBackgroundContrast").opacity(0.3), radius: 8)
+            )
     }
 }
 

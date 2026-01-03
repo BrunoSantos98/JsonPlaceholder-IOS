@@ -10,6 +10,9 @@ import SwiftUI
 struct HomeScreenView: View {
     
     @StateObject private var vm = HomeScreenViewModel()
+    let columns = [
+        GridItem(.adaptive(minimum: 350), spacing: 16)
+    ]
     
     var body: some View {
         ScrollView {
@@ -34,12 +37,14 @@ struct HomeScreenView: View {
 private extension HomeScreenView {
     
     var contentListView: some View {
-        LazyVStack {
+        LazyVGrid(columns: columns) {
             ForEach(vm.postsHomePage) { post in
                 NavigationLink(value: post) {
                     HomeScreenCardView(cardPost: post, image: vm.loadImage(imageName: post.imageName))
                 }
             }
+            .padding(.horizontal, 32)
+            .padding(.vertical, 12)
         }
         .buttonStyle(PlainButtonStyle())
     }

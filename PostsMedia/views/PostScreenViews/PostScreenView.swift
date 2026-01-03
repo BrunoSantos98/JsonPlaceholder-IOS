@@ -97,15 +97,13 @@ private extension PostScreenView{
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.top,24)
-        .padding(.horizontal,24)
-        .padding(.bottom, 24)
+        .padding(24)
         .background(Color(.secondarySystemBackground))
     }
     
     var listOfComments: some View{
         StandardListView(itens: vm.postComments){ comment in
-            VStack(alignment: .leading, spacing: 24){
+            VStack(spacing: 24){
                 HStack(alignment: .top){
                     Image(systemName: "person.circle.fill")
                         .font(.title)
@@ -117,7 +115,9 @@ private extension PostScreenView{
                             .font(.subheadline)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.bottom, 8)
+                .padding(.leading, 16)
             }
             .padding(.vertical, 12)
             .background(Color("primaryBackground"))
