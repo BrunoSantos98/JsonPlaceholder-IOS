@@ -35,7 +35,7 @@ struct MainAppView: View {
             .tabItem {
                 Label("Profile", systemImage: "person.crop.circle")
             }
-            .tag(0)
+            .tag(2)
         }
     }
 }

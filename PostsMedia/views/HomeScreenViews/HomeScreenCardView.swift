@@ -29,6 +29,8 @@ struct HomeScreenCardView: View {
                             Image(systemName: postVM.isSaved ? "bookmark.fill" : "bookmark")
                                 .font(.title)
                     }
+                    .accessibilityLabel(postVM.isSaved ? "Remove post from saved posts" : "Save post")
+                    .accessibilityHint("Click to save or remove this post from your saved posts")
                 }
                 
                 Text(cardPost.post.title)
@@ -47,7 +49,7 @@ struct HomeScreenCardView: View {
             }
             .padding(20)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(height: 200)
+            .frame(minHeight: 200)
             .background(
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color("primaryBackground"))

@@ -67,12 +67,16 @@ private extension PostScreenView{
                         .font(.title)
                         .contentTransition(.symbolEffect(.replace))
                 }
+                .accessibilityLabel(vm.isSaved ? "Remove post from saved posts" : "Save post")
+                .accessibilityHint("Click to save or remove this post from your saved posts")
                 .padding(.trailing, 18)
                 
                 ShareLink(item: vm.getTextToShare(post: post)){
                     Image(systemName: "square.and.arrow.up")
                         .font(.title)
                 }
+                .accessibilityLabel("Share post")
+                .accessibilityHint("Click to share this post")
             }
             .navigationDestination(for: Int.self){ userId in
                 UserScreenView(userId: userId)
