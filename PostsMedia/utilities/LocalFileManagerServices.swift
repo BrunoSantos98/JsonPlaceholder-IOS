@@ -31,18 +31,6 @@ class LocalFileManagerServices {
         }
     }
     
-    private func deleteFolder(){
-        guard let path = getImageFolderPath() else{ return }
-        
-        do{
-            try FileManager
-                .default
-                .removeItem(atPath: path.path())
-        }catch let error{
-            print("Error when try to delete folder: \(error)")
-        }
-    }
-    
     private func getImageFolderPath() -> URL? {
         guard
             let path = FileManager
@@ -78,13 +66,13 @@ class LocalFileManagerServices {
     
     func deleteImage(imageName: String) -> String{
         guard
-            let path = getImageFolderPath()?.path(),
-            FileManager.default.fileExists(atPath: "\(path)/\(imageName)") else{
+            let path = getImageFolderPath()?.appendingPathComponent("\(imageName).png").path(),
+            FileManager.default.fileExists(atPath: path) else{
             return "Image not found"
         }
         
         do{
-            try FileManager.default.removeItem(atPath: "\(path)/\(imageName)")
+            try FileManager.default.removeItem(atPath: path)
         } catch let error{
             return "Error when try to delete image: \(error)"
         }
