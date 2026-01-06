@@ -6,11 +6,40 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		C36271332F0D386F000EF6DD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C366EE3A2EFECF8B003CD707 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C366EE412EFECF8B003CD707;
+			remoteInfo = PostsMedia;
+		};
+		C36271422F0D3B52000EF6DD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C366EE3A2EFECF8B003CD707 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C366EE412EFECF8B003CD707;
+			remoteInfo = PostsMedia;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		C362712F2F0D386F000EF6DD /* PostsMediaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PostsMediaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C362713C2F0D3B52000EF6DD /* PostsMediaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PostsMediaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C366EE422EFECF8B003CD707 /* PostsMedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostsMedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		C36271302F0D386F000EF6DD /* PostsMediaTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PostsMediaTests;
+			sourceTree = "<group>";
+		};
+		C362713D2F0D3B52000EF6DD /* PostsMediaUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PostsMediaUITests;
+			sourceTree = "<group>";
+		};
 		C366EE442EFECF8B003CD707 /* PostsMedia */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = PostsMedia;
@@ -19,6 +48,20 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C362712C2F0D386F000EF6DD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C36271392F0D3B52000EF6DD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C366EE3F2EFECF8B003CD707 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				C366EE442EFECF8B003CD707 /* PostsMedia */,
+				C36271302F0D386F000EF6DD /* PostsMediaTests */,
+				C362713D2F0D3B52000EF6DD /* PostsMediaUITests */,
 				C366EE432EFECF8B003CD707 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +86,8 @@
 			isa = PBXGroup;
 			children = (
 				C366EE422EFECF8B003CD707 /* PostsMedia.app */,
+				C362712F2F0D386F000EF6DD /* PostsMediaTests.xctest */,
+				C362713C2F0D3B52000EF6DD /* PostsMediaUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +95,52 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C362712E2F0D386F000EF6DD /* PostsMediaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C36271372F0D386F000EF6DD /* Build configuration list for PBXNativeTarget "PostsMediaTests" */;
+			buildPhases = (
+				C362712B2F0D386F000EF6DD /* Sources */,
+				C362712C2F0D386F000EF6DD /* Frameworks */,
+				C362712D2F0D386F000EF6DD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C36271342F0D386F000EF6DD /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C36271302F0D386F000EF6DD /* PostsMediaTests */,
+			);
+			name = PostsMediaTests;
+			packageProductDependencies = (
+			);
+			productName = PostsMediaTests;
+			productReference = C362712F2F0D386F000EF6DD /* PostsMediaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C362713B2F0D3B52000EF6DD /* PostsMediaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C36271442F0D3B52000EF6DD /* Build configuration list for PBXNativeTarget "PostsMediaUITests" */;
+			buildPhases = (
+				C36271382F0D3B52000EF6DD /* Sources */,
+				C36271392F0D3B52000EF6DD /* Frameworks */,
+				C362713A2F0D3B52000EF6DD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C36271432F0D3B52000EF6DD /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C362713D2F0D3B52000EF6DD /* PostsMediaUITests */,
+			);
+			name = PostsMediaUITests;
+			packageProductDependencies = (
+			);
+			productName = PostsMediaUITests;
+			productReference = C362713C2F0D3B52000EF6DD /* PostsMediaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		C366EE412EFECF8B003CD707 /* PostsMedia */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C366EE4D2EFECF8C003CD707 /* Build configuration list for PBXNativeTarget "PostsMedia" */;
@@ -77,9 +170,17 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1640;
+				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
+					C362712E2F0D386F000EF6DD = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = C366EE412EFECF8B003CD707;
+					};
+					C362713B2F0D3B52000EF6DD = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = C366EE412EFECF8B003CD707;
+					};
 					C366EE412EFECF8B003CD707 = {
 						CreatedOnToolsVersion = 16.4;
 					};
@@ -100,11 +201,27 @@
 			projectRoot = "";
 			targets = (
 				C366EE412EFECF8B003CD707 /* PostsMedia */,
+				C362712E2F0D386F000EF6DD /* PostsMediaTests */,
+				C362713B2F0D3B52000EF6DD /* PostsMediaUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C362712D2F0D386F000EF6DD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C362713A2F0D3B52000EF6DD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C366EE402EFECF8B003CD707 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +232,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C362712B2F0D386F000EF6DD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C36271382F0D3B52000EF6DD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C366EE3E2EFECF8B003CD707 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +255,106 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		C36271342F0D386F000EF6DD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C366EE412EFECF8B003CD707 /* PostsMedia */;
+			targetProxy = C36271332F0D386F000EF6DD /* PBXContainerItemProxy */;
+		};
+		C36271432F0D3B52000EF6DD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C366EE412EFECF8B003CD707 /* PostsMedia */;
+			targetProxy = C36271422F0D3B52000EF6DD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		C36271352F0D386F000EF6DD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5M695XLW8A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bruno.PostsMediaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PostsMedia.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PostsMedia";
+			};
+			name = Debug;
+		};
+		C36271362F0D386F000EF6DD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5M695XLW8A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bruno.PostsMediaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PostsMedia.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PostsMedia";
+			};
+			name = Release;
+		};
+		C36271452F0D3B52000EF6DD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5M695XLW8A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bruno.PostsMediaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PostsMedia;
+			};
+			name = Debug;
+		};
+		C36271462F0D3B52000EF6DD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5M695XLW8A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bruno.PostsMediaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PostsMedia;
+			};
+			name = Release;
+		};
 		C366EE4B2EFECF8C003CD707 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -303,6 +533,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C36271372F0D386F000EF6DD /* Build configuration list for PBXNativeTarget "PostsMediaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C36271352F0D386F000EF6DD /* Debug */,
+				C36271362F0D386F000EF6DD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C36271442F0D3B52000EF6DD /* Build configuration list for PBXNativeTarget "PostsMediaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C36271452F0D3B52000EF6DD /* Debug */,
+				C36271462F0D3B52000EF6DD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C366EE3D2EFECF8B003CD707 /* Build configuration list for PBXProject "PostsMedia" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
