@@ -47,6 +47,8 @@ class LocalFileManagerServices {
     
     //MARK: Image Section
     func saveImage(image: UIImage, name: String) -> String{
+        createFolderIfNeeded()
+        
         guard
             let data = image.pngData(),
             let path = getImageFolderPath()?
