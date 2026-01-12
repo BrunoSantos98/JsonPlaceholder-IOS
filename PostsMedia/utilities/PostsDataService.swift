@@ -13,6 +13,7 @@ class PostsDataService: ObservableObject {
     static let instance = PostsDataService()
     
     private let fileManagerService = LocalFileManagerServices.instance
+    private let urlSession: URLSession
     
     @Published var posts: [PostModel] = []
     @Published var postById: PostModel? = nil
@@ -21,12 +22,14 @@ class PostsDataService: ObservableObject {
     @Published var userById: UserModel? = nil
     var cancellables = Set<AnyCancellable>()
     
-    private init(){}
+    init(urlSession: URLSession = .shared){
+        self.urlSession = urlSession
+    }
     
     func getPosts(){
         guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return }
         
-        URLSession.shared.dataTaskPublisher(for: url)
+        self.urlSession.dataTaskPublisher(for: url)
             .subscribe(on: DispatchQueue.global(qos: .background))
             .receive(on: DispatchQueue.main)
             .tryMap(handleOutput)
@@ -34,7 +37,7 @@ class PostsDataService: ObservableObject {
             .sink { (completion) in
                 switch completion {
                 case .failure(let error):
-                    print("Erro ao tentar buscar os dados: \(error)")
+                    print("Error when try to get posts: \(error)")
                     break
                 case .finished:
                     break
@@ -48,7 +51,7 @@ class PostsDataService: ObservableObject {
     func getPostById(id: Int){
         guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts/\(id)") else { return }
         
-        URLSession.shared.dataTaskPublisher(for: url)
+        urlSession.dataTaskPublisher(for: url)
             .subscribe(on: DispatchQueue.global(qos: .background))
             .receive(on: DispatchQueue.main)
             .tryMap(handleOutput)
@@ -56,7 +59,7 @@ class PostsDataService: ObservableObject {
             .sink { (completion) in
                 switch completion {
                 case .failure(let error):
-                    print("Erro ao tentar buscar os dados: \(error)")
+                    print("Error when try to get post by ID: \(error)")
                     break
                 case .finished:
                     break
@@ -74,22 +77,22 @@ class PostsDataService: ObservableObject {
         
         do
         {
-            let (data, response) = try await URLSession.shared.data(from: url)
+            let (data, response) = try await urlSession.data(from: url)
             
             try handleResponse(response: response, data: data)
             
             return try JSONDecoder().decode([PostCommentModel].self, from: data)
             
         } catch let error{
-            print("Error when try to gbet comments: \(error)")
+            print("Error when try to get comments: \(error)")
             return []
         }
     }
     
-    func getUserById(userId: Int){
+    func fetchUserById(userId: Int){
         guard let url = URL(string: "https://jsonplaceholder.typicode.com/users/\(userId)") else { return }
         
-        URLSession.shared.dataTaskPublisher(for: url)
+        urlSession.dataTaskPublisher(for: url)
             .subscribe(on: DispatchQueue.global(qos: .background))
             .receive(on: DispatchQueue.main)
             .tryMap(handleOutput)
@@ -97,7 +100,7 @@ class PostsDataService: ObservableObject {
             .sink { (completion) in
                 switch completion {
                 case .failure(let error):
-                    print("Erro ao tentar buscar os dados: \(error)")
+                    print("Error when try to get user by ID: \(error)")
                     break
                 case .finished:
                     break
@@ -124,14 +127,12 @@ class PostsDataService: ObservableObject {
             response.statusCode >= 200 && response.statusCode < 300 else {
             throw URLError(.badServerResponse)
         }
-        
-//        return data
     }
     
     func getUsers(){
         guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else { return }
         
-        URLSession.shared.dataTaskPublisher(for: url)
+        urlSession.dataTaskPublisher(for: url)
             .subscribe(on: DispatchQueue.global(qos: .background))
             .receive(on: DispatchQueue.main)
             .tryMap(handleOutput)
@@ -139,7 +140,7 @@ class PostsDataService: ObservableObject {
             .sink { (completion) in
                 switch completion {
                 case .failure(let error):
-                    print("Erro ao tentar buscar os dados: \(error)")
+                    print("Error when try to get users: \(error)")
                     break
                 case .finished:
                     break
@@ -157,7 +158,7 @@ class PostsDataService: ObservableObject {
         }
         
         do{
-            let(data, response) = try await URLSession.shared.data(from: url)
+            let(data, response) = try await urlSession.data(from: url)
             try handleResponse(response: response, data: data)
             
             let listUsers =  try JSONDecoder().decode([UserModel].self, from: data)
@@ -179,7 +180,7 @@ class PostsDataService: ObservableObject {
         }
         
         do{
-            let(data, response) = try await URLSession.shared.data(from: url)
+            let(data, response) = try await urlSession.data(from: url)
             try handleResponse(response: response, data: data)
             
             return try JSONDecoder().decode([TodoTasks].self, from: data)
