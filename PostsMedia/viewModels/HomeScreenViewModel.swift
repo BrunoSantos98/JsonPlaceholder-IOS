@@ -10,14 +10,17 @@ import Combine
 import SwiftUI
 
 class HomeScreenViewModel: ObservableObject {
-    private let postsService = PostsDataService.instance
-    private let fileManagerService = LocalFileManagerServices.instance
+    private let postsService:  PostsDataService
+    private let fileManagerService: LocalFileManagerServices
     
     @Published var postsHomePage: [PostHomePageModel] = []
     @Published var isLoading: Bool = false
     private var cancellables = Set<AnyCancellable>()
     
-    init(){
+    init(postService: PostsDataService = .instance, fileManagerService: LocalFileManagerServices = .instance){
+        self.postsService = postService
+        self.fileManagerService = fileManagerService
+        
         addSubscribers()
         saveImagesWhenInit()
     }
