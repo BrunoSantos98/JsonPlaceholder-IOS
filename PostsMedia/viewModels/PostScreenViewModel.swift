@@ -9,14 +9,16 @@ import Foundation
 import SwiftData
 
 class PostScreenViewModel: ObservableObject {
-    private let postsService = PostsDataService.instance
+    private let postsService: PostsDataService
     private var modelContext: ModelContext?
     
     @Published var postComments: [PostCommentModel] = []
     @Published var isLoading: Bool = false
     @Published var isSaved: Bool = false
     
-    init(){}
+    init(postService: PostsDataService = .instance){
+        self.postsService = postService
+    }
     
     func getComments(forPostId postId: Int) {
         isLoading = true
