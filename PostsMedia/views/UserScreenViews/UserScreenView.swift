@@ -47,8 +47,8 @@ struct UserScreenView: View {
             .navigationBarTitleDisplayMode(.inline)
             .scrollBounceBehavior(.basedOnSize)
         }
-        .onAppear{
-            vm.fetchUser(userId: userId)
+        .task{
+            await vm.fetchUser(userId: userId)
         }
     }
 }
@@ -115,8 +115,8 @@ private extension UserScreenView {
         .padding(24)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(.secondarySystemBackground))
-        .onAppear{
-            vm.fetchTodoTasks(userId: userId)
+        .task{
+            await vm.fetchTodoTasks(userId: userId)
         }
     }
     

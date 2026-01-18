@@ -17,7 +17,8 @@ class HomeScreenViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     private var cancellables = Set<AnyCancellable>()
     
-    init(postService: PostsDataService = .instance, fileManagerService: LocalFileManagerServices = .instance){
+    init(postService: PostsDataService = .instance,
+         fileManagerService: LocalFileManagerServices = .instance){
         self.postsService = postService
         self.fileManagerService = fileManagerService
         
